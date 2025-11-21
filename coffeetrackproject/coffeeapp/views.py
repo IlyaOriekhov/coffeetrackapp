@@ -1,8 +1,11 @@
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView, ListView
 from .models import Coffee, Recipe
-from .forms import CoffeeForm, RecipeForm
+from .forms import CoffeeForm, RecipeForm, LoginForm, RegisterForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from django.shortcuts import render, redirect
 
 
 # Create your views here.
@@ -92,3 +95,40 @@ class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         recipe = self.get_object()
         return recipe.owner == self.request.user
+
+
+def login_view(request):
+    if request.method == "GET":
+        form = LoginForm()
+        return render(request, "login.html", {"form": form})
+    elif request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, f"Hello {username}!")
+                return redirect("coffee_list")
+            else:
+                messages.error(request, f"Incorrect username or password")
+        return render(request, "login.html", {"form": form})
+
+def register_view(request):
+    if request.method == "GET":
+        form = RegisterForm()
+        return render(request, "register.html", {"form": form})
+    elif request.method == "POST":
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Registration successful!")
+            return redirect("coffee_list")
+        return render(request, "register.html", {"form": form})
+
+def logout_view(request):
+    logout(request)
+    messages.success(request, "Logout successful!")
+    return redirect("coffee_list")
