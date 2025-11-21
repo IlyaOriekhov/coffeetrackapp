@@ -1,9 +1,16 @@
-<h1>{{ recipe.title }}</h1>
-<p>Method: {{ recipe.method }}</p>
-<p>Description: {{ recipe.description }}</p>
-<p>Ingredients: {{ recipe.ingredients }}</p>
-<p>Instruction: {{ recipe.instructions }}</p>
-<p>Coffee: {{ recipe.coffee.name }}</p>
-<a href="{% url 'recipe_edit' recipe.pk %}">Edit</a>
-<a href="{% url 'recipe_delete' recipe.pk %}">Delete</a>
-<a href="{% url 'recipe_list' %}">To the list</a>
+{% extends "base.html" %}
+{% block content %}
+<div class="card recipe-detail-card coffee-detail-card p-4 mb-4">
+    <h2 class="coffee-heading">{{ object.title }}</h2>
+    <p><strong>Метод:</strong> {{ object.method }}</p>
+    <p><strong>Опис:</strong> {{ object.description }}</p>
+    {% if object.ingredients %}
+        <p><strong>Інгредієнти:</strong><br>{{ object.ingredients|linebreaks }}</p>
+    {% endif %}
+    <p><strong>Інструкція:</strong><br>{{ object.instructions|linebreaks }}</p>
+    <p><strong>Використана кава:</strong> <span class="coffee-link">{{ object.coffee.name }}</span></p>
+    <a href="{% url 'recipe_edit' object.pk %}" class="btn coffee-btn">Редагувати</a>
+    <a href="{% url 'recipe_delete' object.pk %}" class="btn btn-danger">Видалити</a>
+    <a href="{% url 'recipe_list' %}" class="btn coffee-btn mt-2">Назад</a>
+</div>
+{% endblock %}

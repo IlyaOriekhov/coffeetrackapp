@@ -7,10 +7,10 @@ from .views import (
 
 urlpatterns = [
     path('', CoffeeListView.as_view(), name='coffee_list'),
-    path('create/', CoffeeCreateView.as_view(), name='coffee_create'),
-    path('<int:pk>/', CoffeeDetailView.as_view(), name='coffee_detail'),
-    path('<int:pk>/edit/', CoffeeUpdateView.as_view(), name='coffee_edit'),
-    path('<int:pk>/delete/', CoffeeDeleteView.as_view(), name='coffee_delete'),
+    path('coffee/create/', CoffeeCreateView.as_view(), name='coffee_create'),
+    path('coffee/<int:pk>/', CoffeeDetailView.as_view(), name='coffee_detail'),
+    path('coffee/<int:pk>/edit/', CoffeeUpdateView.as_view(), name='coffee_edit'),
+    path('coffee/<int:pk>/delete/', CoffeeDeleteView.as_view(), name='coffee_delete'),
 
     path('recipes/', RecipeListView.as_view(), name='recipe_list'),
     path('recipes/add/', RecipeCreateView.as_view(), name='recipe_add'),

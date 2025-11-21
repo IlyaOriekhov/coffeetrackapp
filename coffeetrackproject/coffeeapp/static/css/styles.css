@@ -1,0 +1,61 @@
+body.coffee-bg {
+    background: #3e2512;
+    min-height: 100vh;
+}
+
+.coffee-navbar, .coffee-footer {
+    background: #5c3822;
+    color: #ffe3b3;
+}
+
+.coffee-container {
+    background: #ffe3b3;
+    border: 1px solid #deb887;
+}
+
+.coffee-heading {
+    color: #5c3822;
+    font-family: 'Merriweather', serif;
+}
+
+.coffee-link, .coffee-link:visited {
+    color: #835c3b;
+    text-decoration: underline;
+}
+
+.coffee-link:hover {
+    color: #9c7248;
+    text-decoration: none;
+}
+
+.coffee-btn, .btn.coffee-btn {
+    background: #7a4f2b !important;
+    color: #ffe3b3 !important;
+    border: none;
+}
+
+.coffee-btn:hover {
+    background: #a98457 !important;
+    color: #fff !important;
+}
+
+.coffee-table {
+    background: #fff9f3;
+    border-color: #deb887;
+}
+
+.coffee-detail-card {
+    background: #fff6e6;
+    border: 2px solid #deb887;
+    color: #5c3822;
+}
+
+.coffee-form, .coffee-login-form, .coffee-register-form, .coffee-confirm-delete {
+    background: #fff9f3;
+    border: 2px solid #deb887;
+}
+
+footer.coffee-footer {
+    color: #ffe3b3;
+    background: #3e2512;
+}

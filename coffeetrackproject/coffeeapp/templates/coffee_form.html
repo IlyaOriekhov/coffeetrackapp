@@ -1,7 +1,10 @@
-<h1>{% if form.instance.pk %}Edit Coffee{% else %}Add Coffee{% endif %}</h1>
-<form method="post">
+{% extends "base.html" %}
+{% block content %}
+<h1 class="coffee-heading">{% if form.instance.pk %}Редагувати каву{% else %}Додати каву{% endif %}</h1>
+<form method="post" class="coffee-form p-4 rounded shadow-sm">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Save</button>
+    <button type="submit" class="btn coffee-btn">Зберегти</button>
+    <a href="{% url 'coffee_list' %}" class="btn btn-light coffee-btn">Назад</a>
 </form>
-<a href="{% url 'coffee_list' %}">To the coffee list</a>
+{% endblock %}

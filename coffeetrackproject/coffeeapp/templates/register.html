@@ -1,7 +1,12 @@
-<h1>Registration</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Register</button>
-</form>
-<a href="{% url 'login' %}">Log In</a>
+{% extends "base.html" %}
+{% block content %}
+<div class="coffee-register-form p-4 rounded shadow-sm">
+    <h1>Реєстрація</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn coffee-btn">Зареєструватись</button>
+    </form>
+    <a href="{% url 'login' %}" class="btn-link coffee-link">Вхід</a>
+</div>
+{% endblock %}

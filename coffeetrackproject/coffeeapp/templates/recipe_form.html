@@ -1,6 +1,10 @@
-<h1>Recipe details</h1>
-<form method="post">
+{% extends "base.html" %}
+{% block content %}
+<h1 class="coffee-heading">{% if form.instance.pk %}Редагувати рецепт{% else %}Додати рецепт{% endif %}</h1>
+<form method="post" class="recipe-form coffee-form p-4 rounded shadow-sm">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Save</button>
+    <button type="submit" class="btn coffee-btn">Зберегти</button>
+    <a href="{% url 'recipe_list' %}" class="btn btn-light coffee-btn">Назад</a>
 </form>
+{% endblock %}

@@ -1,14 +1,32 @@
-<h1>Recipes</h1>
-<a href="{% url 'recipe_add' %}">Add recipe</a>
-<ul>
-    {% for recipe in recipes %}
-        <li>
-            {{ recipe.title }} ({{ recipe.method }})
-            <a href="{% url 'recipe_detail' recipe.pk %}">Details</a>
-            <a href="{% url 'recipe_edit' recipe.pk %}">Edit</a>
-            <a href="{% url 'recipe_delete' recipe.pk %}">Delete</a>
-        </li>
-    {% empty %}
-        <li>No recipes yet!</li>
-    {% endfor %}
-</ul>
+{% extends "base.html" %}
+{% block content %}
+<h1 class="coffee-heading">Рецепти кави</h1>
+<a href="{% url 'recipe_add' %}" class="btn coffee-btn mb-3">Додати рецепт</a>
+<table class="table table-striped coffee-table">
+    <thead>
+        <tr>
+            <th>Назва рецепта</th>
+            <th>Метод</th>
+            <th>Опис</th>
+            <th>Кава</th>
+            <th>Дії</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for recipe in recipes %}
+            <tr>
+                <td><a class="coffee-link" href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.title }}</a></td>
+                <td>{{ recipe.method }}</td>
+                <td>{{ recipe.description|truncatechars:50 }}</td>
+                <td>{{ recipe.coffee.name }}</td>
+                <td>
+                    <a href="{% url 'recipe_edit' recipe.pk %}" class="btn btn-sm coffee-btn">Редагувати</a>
+                    <a href="{% url 'recipe_delete' recipe.pk %}" class="btn btn-sm btn-danger">Видалити</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="5">Немає рецептів — додай перший!</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

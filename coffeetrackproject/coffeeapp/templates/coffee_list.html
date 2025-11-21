@@ -1,13 +1,34 @@
-<h1>Coffee List</h1>
-<a href="{% url 'coffee_create' %}">Add coffee</a>
-<ul>
-    {% for coffee in coffees %}
-        <li>
-            <a href="{% url 'coffee_detail' coffee.pk %}">{{ coffee.name }}</a> ({{ coffee.country }}, {{ coffee.roast_level }})
-            <a href="{% url 'coffee_edit' coffee.pk %}">Edit</a>
-            <a href="{% url 'coffee_delete' coffee.pk %}">Delete</a>
-        </li>
-    {% empty %}
-        <li>No entries yet!</li>
-    {% endfor %}
-</ul>
+{% extends "base.html" %}
+{% block content %}
+<h1 class="mb-4 coffee-heading">Моя кава</h1>
+<a href="{% url 'coffee_create' %}" class="btn coffee-btn mb-3">Додати каву</a>
+<table class="table table-striped coffee-table">
+    <thead>
+        <tr>
+            <th>Назва</th>
+            <th>Країна</th>
+            <th>Обсмажка</th>
+            <th>Метод обробки</th>
+            <th>Кількість</th>
+            <th>Дії</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for coffee in coffees %}
+            <tr>
+                <td><a class="coffee-link" href="{% url 'coffee_detail' coffee.pk %}">{{ coffee.name }}</a></td>
+                <td>{{ coffee.country }}</td>
+                <td>{{ coffee.roast_level }}</td>
+                <td>{{ coffee.process_method }}</td>
+                <td>{{ coffee.quantity }}</td>
+                <td>
+                    <a href="{% url 'coffee_edit' coffee.pk %}" class="btn btn-sm coffee-btn">Редагувати</a>
+                    <a href="{% url 'coffee_delete' coffee.pk %}" class="btn btn-sm btn-danger">Видалити</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="6">Немає записів — додай свою улюблену каву!</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

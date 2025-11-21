@@ -31,17 +31,24 @@ class CoffeeDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Coffee
     template_name = "coffee_detail.html"
 
-class CoffeeUpdateView(LoginRequiredMixin, UpdateView):
+    def test_func(self):
+        coffee = self.get_object()
+        return coffee.owner == self.request.user
+
+class CoffeeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Coffee
     form_class = CoffeeForm
     template_name = "coffee_form.html"
 
-    def get_queryset(self):
-        return reverse_lazy('coffee_detail', kwargs={'pk': self.object.pk})
+    def get_success_url(self):
+        return reverse_lazy("coffee_detail", kwargs={"pk": self.get_object().pk})
 
     def test_func(self):
         coffee = self.get_object()
         return coffee.owner == self.request.user
+
+    def get_queryset(self):
+        return Coffee.objects.filter(owner=self.request.user)
 
 class CoffeeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Coffee

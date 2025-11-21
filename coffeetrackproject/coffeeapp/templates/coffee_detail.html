@@ -1,9 +1,13 @@
-<h1>{{ object.name }}</h1>
-<p>Country: {{ object.country }}</p>
-<p>Roasting: {{ object.roast_level }}</p>
-<p>Processing method: {{ object.process_method }}</p>
-<p>Quantity: {{ object.quantity }}</p>
-<a href="{% url 'coffee_edit' object.pk %}">Edit</a>
-<a href="{% url 'coffee_delete' object.pk %}">Delete</a>
-<a href="{% url 'coffee_list' %}">Back to list</a>
-
+{% extends "base.html" %}
+{% block content %}
+<div class="card coffee-detail-card p-4 mb-4">
+    <h2 class="coffee-heading">{{ object.name }}</h2>
+    <p><strong>Країна:</strong> {{ object.country }}</p>
+    <p><strong>Обсмажка:</strong> {{ object.roast_level }}</p>
+    <p><strong>Метод обробки:</strong> {{ object.process_method }}</p>
+    <p><strong>Кількість:</strong> {{ object.quantity }}</p>
+    <a href="{% url 'coffee_edit' object.pk %}" class="btn coffee-btn">Редагувати</a>
+    <a href="{% url 'coffee_delete' object.pk %}" class="btn btn-danger">Видалити</a>
+    <a href="{% url 'coffee_list' %}" class="btn coffee-btn mt-2">Назад</a>
+</div>
+{% endblock %}
