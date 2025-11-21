@@ -1,0 +1,9 @@
+<h1>{{ recipe.title }}</h1>
+<p>Method: {{ recipe.method }}</p>
+<p>Description: {{ recipe.description }}</p>
+<p>Ingredients: {{ recipe.ingredients }}</p>
+<p>Instruction: {{ recipe.instructions }}</p>
+<p>Coffee: {{ recipe.coffee.name }}</p>
+<a href="{% url 'recipe_edit' recipe.pk %}">Edit</a>
+<a href="{% url 'recipe_delete' recipe.pk %}">Delete</a>
+<a href="{% url 'recipe_list' %}">To the list</a>

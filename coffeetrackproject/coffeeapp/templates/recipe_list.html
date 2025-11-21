@@ -1,0 +1,14 @@
+<h1>Recipes</h1>
+<a href="{% url 'recipe_add' %}">Add recipe</a>
+<ul>
+    {% for recipe in recipes %}
+        <li>
+            {{ recipe.title }} ({{ recipe.method }})
+            <a href="{% url 'recipe_detail' recipe.pk %}">Details</a>
+            <a href="{% url 'recipe_edit' recipe.pk %}">Edit</a>
+            <a href="{% url 'recipe_delete' recipe.pk %}">Delete</a>
+        </li>
+    {% empty %}
+        <li>No recipes yet!</li>
+    {% endfor %}
+</ul>

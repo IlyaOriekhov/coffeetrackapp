@@ -12,7 +12,7 @@ class CoffeeListView(LoginRequiredMixin, ListView):
     context_object_name = "coffees"
 
     def get_queryset(self):
-        return Coffee.objects.filter(user=self.request.user)
+        return Coffee.objects.filter(owner=self.request.user)
 
 class CoffeeCreateView(LoginRequiredMixin, CreateView):
     model = Coffee
@@ -49,3 +49,46 @@ class CoffeeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         coffee = self.get_object()
         return coffee.owner == self.request.user
 
+
+class RecipeListView(LoginRequiredMixin, ListView):
+    model = Recipe
+    template_name = "recipe_list.html"
+    context_object_name = "recipes"
+
+    def get_queryset(self):
+        return Recipe.objects.filter(owner=self.request.user)
+
+class RecipeCreateView(LoginRequiredMixin, CreateView):
+    model = Recipe
+    form_class = RecipeForm
+    template_name = "recipe_form.html"
+    success_url = reverse_lazy("recipe_list")
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
+class RecipeDetailView(LoginRequiredMixin, DetailView):
+    model = Recipe
+    template_name = "recipe_detail.html"
+
+class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Recipe
+    form_class = RecipeForm
+    template_name = "recipe_form.html"
+
+    def get_success_url(self):
+        return reverse_lazy("recipe_detail", kwargs={"pk": self.object.pk})
+
+    def test_func(self):
+        recipe = self.get_object()
+        return recipe.owner == self.request.user
+
+class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Recipe
+    success_url = reverse_lazy("recipe_list")
+    template_name = "recipe_confirm_delete.html"
+
+    def test_func(self):
+        recipe = self.get_object()
+        return recipe.owner == self.request.user
