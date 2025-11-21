@@ -1,0 +1,13 @@
+<h1>Coffee List</h1>
+<a href="{% url 'coffee_add' %}">Add coffee</a>
+<ul>
+    {% for coffee in coffees %}
+        <li>
+            <a href="{% url 'coffee_detail' coffee.pk %}">{{ coffee.name }}</a> ({{ coffee.country }}, {{ coffee.roast_level }})
+            <a href="{% url 'coffee_edit' coffee.pk %}">Edit</a>
+            <a href="{% url 'coffee_delete' coffee.pk %}">Delete</a>
+        </li>
+    {% empty %}
+        <li>No entries yet!</li>
+    {% endfor %}
+</ul>

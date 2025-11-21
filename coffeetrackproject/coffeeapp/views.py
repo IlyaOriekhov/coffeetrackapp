@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView, ListView
-from .models import Coffee
-from .forms import CoffeeForm
+from .models import Coffee, Recipe
+from .forms import CoffeeForm, RecipeForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 

@@ -1,0 +1,9 @@
+<h1>{{ object.name }}</h1>
+<p>Country: {{ object.country }}</p>
+<p>Roasting: {{ object.roast_level }}</p>
+<p>Processing method: {{ object.process_method }}</p>
+<p>Quantity: {{ object.quantity }}</p>
+<a href="{% url 'coffee_edit' object.pk %}">Edit</a>
+<a href="{% url 'coffee_delete' object.pk %}">Delete</a>
+<a href="{% url 'coffee_list' %}">Back to list</a>
+

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Coffee
+from .models import Coffee, Recipe
 
 class CoffeeForm(forms.ModelForm):
     class Meta:
@@ -8,5 +8,5 @@ class CoffeeForm(forms.ModelForm):
 
 class RecipeForm(forms.ModelForm):
     class Meta:
-        model = Coffee
+        model = Recipe
         fields = ["title", "method", "description", "ingredients", "instructions", "coffee"]

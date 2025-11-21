@@ -1,0 +1,7 @@
+<h1>Delete coffee</h1>
+<p>Are you sure you want to delete {{ object.name }}?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirm</button>
+    <a href="{% url 'coffee_detail' object.pk %}">Cancel</a>
+</form>
