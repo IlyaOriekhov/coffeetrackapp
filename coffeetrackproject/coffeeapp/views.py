@@ -9,13 +9,16 @@ from django.shortcuts import render, redirect
 
 
 # Create your views here.
-class CoffeeListView(LoginRequiredMixin, ListView):
+class CoffeeListView(ListView):
     model = Coffee
     template_name = "coffee_list.html"
     context_object_name = "coffees"
 
     def get_queryset(self):
-        return Coffee.objects.filter(owner=self.request.user)
+        if self.request.user.is_authenticated:
+            return Coffee.objects.filter(owner=self.request.user)
+        else:
+            return Coffee.objects.all()
 
 class CoffeeCreateView(LoginRequiredMixin, CreateView):
     model = Coffee
@@ -27,7 +30,7 @@ class CoffeeCreateView(LoginRequiredMixin, CreateView):
         form.instance.owner = self.request.user
         return super().form_valid(form)
 
-class CoffeeDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+class CoffeeDetailView(DetailView):
     model = Coffee
     template_name = "coffee_detail.html"
 
@@ -60,13 +63,16 @@ class CoffeeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return coffee.owner == self.request.user
 
 
-class RecipeListView(LoginRequiredMixin, ListView):
+class RecipeListView(ListView):
     model = Recipe
     template_name = "recipe_list.html"
     context_object_name = "recipes"
-
     def get_queryset(self):
-        return Recipe.objects.filter(owner=self.request.user)
+        if self.request.user.is_authenticated:
+            return Recipe.objects.filter(owner=self.request.user)
+        else:
+            return Recipe.objects.all()
+
 
 class RecipeCreateView(LoginRequiredMixin, CreateView):
     model = Recipe
