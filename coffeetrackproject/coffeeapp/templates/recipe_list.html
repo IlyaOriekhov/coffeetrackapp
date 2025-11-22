@@ -2,6 +2,29 @@
 {% block content %}
 <h1 class="coffee-heading">Рецепти кави</h1>
 <a href="{% url 'recipe_add' %}" class="btn coffee-btn mb-3">Додати рецепт</a>
+
+<form method="get" class="row gy-2 align-items-center mb-4 coffee-search-form">
+    <div class="col-sm-6 mb-2">
+        <input type="text" name="search"
+               class="form-control coffee-search-input"
+               placeholder="Пошук за назвою рецепта..."
+               value="{{ request.GET.search }}">
+    </div>
+    <div class="col-sm-4 mb-2">
+        <select name="method" class="form-select coffee-search-input">
+            <option value="">Будь-який метод</option>
+            {% for m in methods %}
+                <option value="{{ m }}" {% if request.GET.method == m %}selected{% endif %}>{{ m }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-auto mb-2">
+        <button type="submit" class="btn coffee-btn">
+            ☕ Фільтрувати
+        </button>
+    </div>
+</form>
+
 <table class="table table-striped coffee-table">
     <thead>
         <tr>
