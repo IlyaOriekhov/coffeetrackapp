@@ -15,21 +15,45 @@
 </head>
 <body class="coffee-bg">
     <nav class="navbar navbar-expand-lg navbar-dark coffee-navbar px-3">
-        <a class="navbar-brand" href="{% url 'coffee_list' %}">CoffeeTrack</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" href="{% url 'coffee_list' %}">Кава</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'recipe_list' %}">Рецепти</a></li>
-            </ul>
-            <span class="navbar-text">
-                {% if user.is_authenticated %}
-                    Вітаю, {{ user.username }} | <a class="nav-link d-inline coffee-link" href="{% url 'logout' %}">Вийти</a>
-                {% else %}
-                    <a class="nav-link d-inline coffee-link" href="{% url 'login' %}">Вхід</a> | <a class="nav-link d-inline coffee-link" href="{% url 'register' %}">Реєстрація</a>
-                {% endif %}
-            </span>
-        </div>
-    </nav>
+    <a class="navbar-brand" href="{% url 'coffee_list' %}">CoffeeTrack</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarContent" aria-controls="navbarContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item"><a class="nav-link" href="{% url 'coffee_list' %}">Кава</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'recipe_list' %}">Рецепти</a></li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+            {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle coffee-link" href="#"
+                       id="userDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                       {{ user.username }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{% url 'admin:index' %}">Адмін панель</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'logout' %}">Вийти</a>
+                        </li>
+                    </ul>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link coffee-link" href="{% url 'login' %}">Вхід</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link coffee-link" href="{% url 'register' %}">Реєстрація</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
     <div class="container mt-4 coffee-container rounded shadow-sm">
         {% if messages %}
             {% for message in messages %}

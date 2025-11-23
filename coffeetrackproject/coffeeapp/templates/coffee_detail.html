@@ -10,4 +10,15 @@
     <a href="{% url 'coffee_delete' object.pk %}" class="btn btn-danger">Видалити</a>
     <a href="{% url 'coffee_list' %}" class="btn coffee-btn mt-2">Назад</a>
 </div>
+    <h3 class="mt-4 mb-2">Рецепти для цієї кави:</h3>
+<ul>
+    {% for recipe in recipes %}
+        <li>
+            <a class="coffee-link" href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.title }}</a>
+            <span class="text-muted">({{ recipe.method }})</span>
+        </li>
+    {% empty %}
+        <li>Немає збережених рецептів для цієї кави.</li>
+    {% endfor %}
+</ul>
 {% endblock %}

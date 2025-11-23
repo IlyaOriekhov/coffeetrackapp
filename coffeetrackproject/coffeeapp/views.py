@@ -8,30 +8,19 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 
 
-# Create your views here.
-# class CoffeeListView(ListView):
-#     model = Coffee
-#     template_name = "coffee_list.html"
-#     context_object_name = "coffees"
-#
-#     def get_queryset(self):
-#         if self.request.user.is_authenticated:
-#             return Coffee.objects.filter(owner=self.request.user)
-#         else:
-#             return Coffee.objects.all()
-
 class CoffeeListView(ListView):
     model = Coffee
     template_name = "coffee_list.html"
     context_object_name = "coffees"
+    paginate_by = 10
 
     def get_queryset(self):
         queryset = Coffee.objects.all()
         if self.request.user.is_authenticated:
             queryset = queryset.filter(owner=self.request.user)
-        search_query = self.request.GET.get('search', '')
-        country = self.request.GET.get('country', '')
-        roast = self.request.GET.get('roast', '')
+        search_query = self.request.GET.get("search", "")
+        country = self.request.GET.get("country", "")
+        roast = self.request.GET.get("roast", "")
         if search_query:
             queryset = queryset.filter(name__icontains=search_query)
         if country:
@@ -61,9 +50,11 @@ class CoffeeDetailView(DetailView):
     model = Coffee
     template_name = "coffee_detail.html"
 
-    def test_func(self):
-        coffee = self.get_object()
-        return coffee.owner == self.request.user
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['recipes'] = Recipe.objects.filter(coffee=self.object)
+        return context
+
 
 class CoffeeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Coffee
@@ -90,27 +81,18 @@ class CoffeeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return coffee.owner == self.request.user
 
 
-# class RecipeListView(ListView):
-#     model = Recipe
-#     template_name = "recipe_list.html"
-#     context_object_name = "recipes"
-#     def get_queryset(self):
-#         if self.request.user.is_authenticated:
-#             return Recipe.objects.filter(owner=self.request.user)
-#         else:
-#             return Recipe.objects.all()
-
 class RecipeListView(ListView):
     model = Recipe
     template_name = "recipe_list.html"
     context_object_name = "recipes"
+    paginate_by = 10
 
     def get_queryset(self):
         queryset = Recipe.objects.all()
         if self.request.user.is_authenticated:
             queryset = queryset.filter(owner=self.request.user)
-        search_query = self.request.GET.get('search', '')
-        method = self.request.GET.get('method', '')
+        search_query = self.request.GET.get("search", "")
+        method = self.request.GET.get("method", "")
         if search_query:
             queryset = queryset.filter(title__icontains=search_query)
         if method:
@@ -119,7 +101,7 @@ class RecipeListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['methods'] = Recipe.objects.values_list('method', flat=True).distinct()
+        context["methods"] = Recipe.objects.values_list("method", flat=True).distinct()
         return context
 
 
