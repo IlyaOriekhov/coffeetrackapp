@@ -59,3 +59,17 @@ footer.coffee-footer {
     color: #ffe3b3;
     background: #3e2512;
 }
+
+.bg-coffee {
+    background: #b7986a;
+    color: #fff9e3;
+}
+.coffee-link { color: #835c3b; text-decoration: none; font-weight: bold; }
+.coffee-link:hover { text-decoration: underline; color: #784220; }
+
+.coffee-quote {
+    color: #784220;
+    font-style: italic;
+    border-left: 4px solid #deb887;
+    padding-left: 12px;
+}

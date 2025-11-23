@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="text-center pt-5 pb-5">
+    <img src="{% static 'img/coffee.svg' %}" style="width:84px;" alt="logo" />
+    <h1 class="display-4" style="color:#835c3b;">CoffeeTrack</h1>
+    <p class="lead text-muted mb-4">Твоя персональна кавова база! Стеж за сортами кави, улюбленими рецептами, обирай найкращу каву для життя.</p>
+    <blockquote class="blockquote mb-4 coffee-quote">“Життя надто коротке, щоб пити нецікаву каву...”</blockquote>
+    <div class="d-flex justify-content-center gap-3">
+        <a href="{% url 'coffee_list' %}" class="btn coffee-btn">Моя кава</a>
+        <a href="{% url 'recipe_list' %}" class="btn coffee-btn">Мої рецепти</a>
+        <a href="{% url 'coffee_create' %}" class="btn btn-outline-secondary">+ Додати каву</a>
+    </div>
+</div>
+{% endblock %}
