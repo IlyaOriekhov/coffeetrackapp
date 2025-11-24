@@ -13,6 +13,17 @@
     <a href="{% url 'coffee_edit' object.pk %}" class="btn coffee-btn">Редагувати</a>
     <a href="{% url 'coffee_delete' object.pk %}" class="btn btn-danger">Видалити</a>
     <a href="{% url 'coffee_list' %}" class="btn coffee-btn mt-2">Назад</a>
+
+    <div class="mb-3">
+        <strong>Опис:</strong>
+
+        <button type="button" id="gemini-descr-btn" class="btn btn-secondary btn-sm ms-2">
+            Згенерувати опис через Gemini AI
+        </button>
+
+        <span id="coffee-desc">{{ object.description }}</span>
+
+    </div>
 </div>
     <h3 class="mt-4 mb-2">Рецепти для цієї кави:</h3>
 <ul>
@@ -25,4 +36,26 @@
         <li>Немає збережених рецептів для цієї кави.</li>
     {% endfor %}
 </ul>
+
+<script>
+    document.getElementById('gemini-descr-btn').onclick = function() {
+        fetch("{% url 'gemini_generate_description' %}", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: "coffee_name=" + encodeURIComponent("{{ object.name }}")
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.description) {
+                document.getElementById('coffee-desc').innerText = data.description;
+            } else {
+                alert("Gemini не зміг згенерувати опис.");
+            }
+        })
+    }
+</script>
+
 {% endblock %}

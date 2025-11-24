@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     CoffeeListView, CoffeeCreateView, CoffeeDetailView,
     CoffeeUpdateView, CoffeeDeleteView, RecipeListView, RecipeCreateView, RecipeDetailView,
-    RecipeUpdateView, RecipeDeleteView, login_view, register_view, logout_view, home_view, news_view
+    RecipeUpdateView, RecipeDeleteView, login_view, register_view, logout_view, home_view, news_view, gemini_generate_description
 )
 
 from django.conf import settings
@@ -11,6 +11,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', home_view, name='home'),
     path('news/', news_view, name='news'),
+    path("gemini/description/", gemini_generate_description, name="gemini_generate_description"),
     path('coffees/', CoffeeListView.as_view(), name='coffee_list'),
     path('coffees/create/', CoffeeCreateView.as_view(), name='coffee_create'),
     path('coffees/<int:pk>/', CoffeeDetailView.as_view(), name='coffee_detail'),

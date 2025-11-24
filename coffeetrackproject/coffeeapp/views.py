@@ -9,6 +9,11 @@ from django.shortcuts import render, redirect
 
 import feedparser
 
+import json
+import google.generativeai as genai
+from django.conf import settings
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 class CoffeeListView(ListView):
     model = Coffee
@@ -196,3 +201,30 @@ def news_view(request):
     feed = feedparser.parse(feed_url)
     items = feed.entries[:10]
     return render(request, "news.html", {"news_items": items})
+
+genai.configure(api_key=settings.GEMINI_API_KEY)
+
+@csrf_exempt
+def gemini_generate_description(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            coffee_name = data.get("coffee_name", "")
+        except:
+            coffee_name = request.POST.get("coffee_name", "")
+        if not coffee_name:
+            return JsonResponse({"error": "coffee_name is required"}, status=400)
+        prompt = f"Напиши короткий, приємний опис кави під назвою '{coffee_name}' для кавоманів."
+        try:
+            model = genai.GenerativeModel(
+                model_name="gemini-2.5-flash",
+            )
+            response = model.generate_content(prompt)
+            description = response.text
+            return JsonResponse({"description": description})
+
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    return JsonResponse({"error": "Invalid request."}, status=400)
+
