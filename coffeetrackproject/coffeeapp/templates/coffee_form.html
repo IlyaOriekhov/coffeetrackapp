@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <h1 class="coffee-heading">{% if form.instance.pk %}Редагувати каву{% else %}Додати каву{% endif %}</h1>
-<form method="post" class="coffee-form p-4 rounded shadow-sm">
+<form method="post" class="coffee-form p-4 rounded shadow-sm" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="btn coffee-btn">Зберегти</button>

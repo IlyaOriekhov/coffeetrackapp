@@ -6,12 +6,12 @@ from django.contrib.auth.models import User
 class CoffeeForm(forms.ModelForm):
     class Meta:
         model = Coffee
-        fields = ["name", "country", "roast_level", "process_method", "quantity"]
+        fields = ["name", "country", "roast_level", "process_method", "quantity", "image"]
 
 class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
-        fields = ["title", "method", "description", "ingredients", "instructions", "coffee"]
+        fields = ["title", "method", "description", "ingredients", "instructions", "coffee", "image"]
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=50)

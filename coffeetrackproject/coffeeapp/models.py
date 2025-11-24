@@ -9,6 +9,7 @@ class Coffee(models.Model):
     process_method = models.CharField(max_length=100)
     quantity = models.IntegerField(default=0)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='coffees/', blank=True, null=True)
 
     def __str__(self):
         return f"{self.name} ({self.country})"
@@ -21,6 +22,7 @@ class Recipe(models.Model):
     instructions = models.TextField()
     coffee = models.ForeignKey(Coffee, on_delete=models.CASCADE, related_name='recipes')
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='recipes/', blank=True, null=True)
 
     def __str__(self):
         return f"{self.title}"

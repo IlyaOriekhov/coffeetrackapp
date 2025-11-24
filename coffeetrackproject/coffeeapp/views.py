@@ -21,18 +21,26 @@ class CoffeeListView(ListView):
         search_query = self.request.GET.get("search", "")
         country = self.request.GET.get("country", "")
         roast = self.request.GET.get("roast", "")
+        price = self.request.GET.get("price", "")
+        order_by = self.request.GET.get("order_by", "")
+
         if search_query:
             queryset = queryset.filter(name__icontains=search_query)
         if country:
             queryset = queryset.filter(country=country)
         if roast:
             queryset = queryset.filter(roast_level=roast)
+        if price:
+            queryset = queryset.filter(price__lte=price)
+        if order_by in ["price", "-price", "created", "-created"]:
+            queryset = queryset.order_by(order_by)
+
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['countries'] = Coffee.objects.values_list('country', flat=True).distinct()
-        context['roasts'] = Coffee.objects.values_list('roast_level', flat=True).distinct()
+        context["countries"] = Coffee.objects.values_list("country", flat=True).distinct()
+        context["roasts"] = Coffee.objects.values_list("roast_level", flat=True).distinct()
         return context
 
 

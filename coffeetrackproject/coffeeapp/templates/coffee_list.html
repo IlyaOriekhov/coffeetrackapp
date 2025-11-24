@@ -4,13 +4,11 @@
 <a href="{% url 'coffee_create' %}" class="btn coffee-btn mb-3">Додати каву</a>
 
 <form method="get" class="row gy-2 align-items-center mb-4 coffee-search-form">
-    <div class="col-sm-4 mb-2">
-        <input type="text" name="search"
-               class="form-control coffee-search-input"
-               placeholder="Пошук за назвою..."
-               value="{{ request.GET.search }}">
-    </div>
     <div class="col-sm-3 mb-2">
+        <input type="text" name="search" class="form-control coffee-search-input"
+               placeholder="Пошук за назвою..." value="{{ request.GET.search }}">
+    </div>
+    <div class="col-sm-2 mb-2">
         <select name="country" class="form-select coffee-search-input">
             <option value="">Всі країни</option>
             {% for c in countries %}
@@ -18,7 +16,7 @@
             {% endfor %}
         </select>
     </div>
-    <div class="col-sm-3 mb-2">
+    <div class="col-sm-2 mb-2">
         <select name="roast" class="form-select coffee-search-input">
             <option value="">Всі обсмажки</option>
             {% for r in roasts %}
@@ -26,10 +24,21 @@
             {% endfor %}
         </select>
     </div>
+    <div class="col-sm-2 mb-2">
+        <input type="number" name="price" class="form-control coffee-search-input"
+            placeholder="Макс. ціна" min="0" value="{{ request.GET.price }}">
+    </div>
+    <div class="col-sm-2 mb-2">
+        <select name="order_by" class="form-select coffee-search-input">
+            <option value="">Сортувати</option>
+            <option value="price" {% if request.GET.order_by == 'price' %}selected{% endif %}>За ціною ↑</option>
+            <option value="-price" {% if request.GET.order_by == '-price' %}selected{% endif %}>За ціною ↓</option>
+            <option value="created" {% if request.GET.order_by == 'created' %}selected{% endif %}>За датою ↑</option>
+            <option value="-created" {% if request.GET.order_by == '-created' %}selected{% endif %}>За датою ↓</option>
+        </select>
+    </div>
     <div class="col-auto mb-2">
-        <button type="submit" class="btn coffee-btn">
-            Фільтрувати
-        </button>
+        <button type="submit" class="btn coffee-btn">Фільтрувати</button>
     </div>
 </form>
 
