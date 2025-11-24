@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.shortcuts import render, redirect
 
+import feedparser
+
 
 class CoffeeListView(ListView):
     model = Coffee
@@ -188,3 +190,9 @@ def logout_view(request):
 
 def home_view(request):
     return render(request, "home.html")
+
+def news_view(request):
+    feed_url = "https://sprudge.com/feed"
+    feed = feedparser.parse(feed_url)
+    items = feed.entries[:10]
+    return render(request, "news.html", {"news_items": items})
