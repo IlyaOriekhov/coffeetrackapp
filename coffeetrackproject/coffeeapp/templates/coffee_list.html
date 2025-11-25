@@ -24,19 +24,19 @@
             {% endfor %}
         </select>
     </div>
-    <div class="col-sm-2 mb-2">
-        <input type="number" name="price" class="form-control coffee-search-input"
-            placeholder="Макс. ціна" min="0" value="{{ request.GET.price }}">
-    </div>
-    <div class="col-sm-2 mb-2">
-        <select name="order_by" class="form-select coffee-search-input">
-            <option value="">Сортувати</option>
-            <option value="price" {% if request.GET.order_by == 'price' %}selected{% endif %}>За ціною ↑</option>
-            <option value="-price" {% if request.GET.order_by == '-price' %}selected{% endif %}>За ціною ↓</option>
-            <option value="created" {% if request.GET.order_by == 'created' %}selected{% endif %}>За датою ↑</option>
-            <option value="-created" {% if request.GET.order_by == '-created' %}selected{% endif %}>За датою ↓</option>
-        </select>
-    </div>
+{#    <div class="col-sm-2 mb-2">#}
+{#        <input type="number" name="price" class="form-control coffee-search-input"#}
+{#            placeholder="Макс. ціна" min="0" value="{{ request.GET.price }}">#}
+{#    </div>#}
+{#    <div class="col-sm-2 mb-2">#}
+{#        <select name="order_by" class="form-select coffee-search-input">#}
+{#            <option value="">Сортувати</option>#}
+{#            <option value="price" {% if request.GET.order_by == 'price' %}selected{% endif %}>За ціною ↑</option>#}
+{#            <option value="-price" {% if request.GET.order_by == '-price' %}selected{% endif %}>За ціною ↓</option>#}
+{#            <option value="created" {% if request.GET.order_by == 'created' %}selected{% endif %}>За датою ↑</option>#}
+{#            <option value="-created" {% if request.GET.order_by == '-created' %}selected{% endif %}>За датою ↓</option>#}
+{#        </select>#}
+{#    </div>#}
     <div class="col-auto mb-2">
         <button type="submit" class="btn coffee-btn">Фільтрувати</button>
     </div>
@@ -50,7 +50,6 @@
             <th>Обсмажка</th>
             <th>Метод обробки</th>
             <th>Кількість</th>
-            <th>Дії</th>
         </tr>
     </thead>
     <tbody>
