@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-<h1 class="coffee-heading">{% if form.instance.pk %}Редагувати рецепт{% else %}Додати рецепт{% endif %}</h1>
-<form method="post" class="recipe-form coffee-form p-4 rounded shadow-sm" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn coffee-btn">Зберегти</button>
-    <a href="{% url 'recipe_list' %}" class="btn btn-light coffee-btn">Назад</a>
-</form>
+<div class="card perc-card mx-auto p-4" style="max-width:540px;">
+    <h2 class="coffee-accent fw-bold mb-3">{{ title|default:"Додати рецепт" }}</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {{ form.as_p }}
+        <div class="d-grid gap-2 mt-3">
+            <button type="submit" class="btn btn-dark rounded-pill">Зберегти</button>
+            <a href="{% url 'recipe_list' %}" class="btn btn-outline-secondary rounded-pill">Назад</a>
+        </div>
+    </form>
+</div>
 {% endblock %}

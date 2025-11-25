@@ -15,11 +15,13 @@ from django.conf import settings
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
+
+
 class CoffeeListView(ListView):
     model = Coffee
     template_name = "coffee_list.html"
     context_object_name = "coffees"
-    paginate_by = 10
+    paginate_by = 1
 
     def get_queryset(self):
         queryset = Coffee.objects.all()
@@ -95,7 +97,7 @@ class RecipeListView(ListView):
     model = Recipe
     template_name = "recipe_list.html"
     context_object_name = "recipes"
-    paginate_by = 10
+    paginate_by = 1
 
     def get_queryset(self):
         queryset = Recipe.objects.all()
@@ -191,10 +193,11 @@ def logout_view(request):
 def home_view(request):
     return render(request, "home.html")
 
+#ОТУТ ТРЕБ ПОКОПАТИСЬ ПО ЯКІСЬ ДИВНІ АРТИКЛІ ВИДАЄ В НОВИНАХ НЕ РОЗУМІЮ
 def news_view(request):
     feed_url = "https://sprudge.com/feed"
     feed = feedparser.parse(feed_url)
-    items = feed.entries[:10]
+    items = feed.entries[:8]
     return render(request, "news.html", {"news_items": items})
 
 genai.configure(api_key=settings.GEMINI_API_KEY)

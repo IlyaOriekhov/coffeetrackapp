@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-<h1 class="mb-4 coffee-heading">Моя кава</h1>
-<a href="{% url 'coffee_create' %}" class="btn coffee-btn mb-3">Додати каву</a>
 
-<form method="get" class="row gy-2 align-items-center mb-4 coffee-search-form">
+<h1 class="mb-4 coffee-accent fw-bold" style="letter-spacing:2px;">Моя кава</h1>
+<a href="{% url 'coffee_create' %}" class="btn btn-dark rounded-pill mb-3 px-4">Додати каву</a>
+
+<form method="get" class="row gy-2 gx-2 align-items-center mb-4 coffee-search-form rounded p-3 shadow-sm" style="background:#fff7f0;">
     <div class="col-sm-3 mb-2">
         <input type="text" name="search" class="form-control coffee-search-input"
                placeholder="Пошук за назвою..." value="{{ request.GET.search }}">
@@ -24,75 +25,70 @@
             {% endfor %}
         </select>
     </div>
-{#    <div class="col-sm-2 mb-2">#}
-{#        <input type="number" name="price" class="form-control coffee-search-input"#}
-{#            placeholder="Макс. ціна" min="0" value="{{ request.GET.price }}">#}
-{#    </div>#}
-{#    <div class="col-sm-2 mb-2">#}
-{#        <select name="order_by" class="form-select coffee-search-input">#}
-{#            <option value="">Сортувати</option>#}
-{#            <option value="price" {% if request.GET.order_by == 'price' %}selected{% endif %}>За ціною ↑</option>#}
-{#            <option value="-price" {% if request.GET.order_by == '-price' %}selected{% endif %}>За ціною ↓</option>#}
-{#            <option value="created" {% if request.GET.order_by == 'created' %}selected{% endif %}>За датою ↑</option>#}
-{#            <option value="-created" {% if request.GET.order_by == '-created' %}selected{% endif %}>За датою ↓</option>#}
-{#        </select>#}
-{#    </div>#}
     <div class="col-auto mb-2">
-        <button type="submit" class="btn coffee-btn">Фільтрувати</button>
+        <button type="submit" class="btn btn-outline-dark rounded-pill px-4 coffee-btn">Фільтрувати</button>
     </div>
 </form>
 
-<table class="table table-striped coffee-table">
-    <thead>
+<div class="table-responsive rounded shadow-sm">
+<table class="table table-hover table-bordered bg-white coffee-table align-middle">
+    <thead class="table-light">
         <tr>
             <th>Назва</th>
             <th>Країна</th>
             <th>Обсмажка</th>
             <th>Метод обробки</th>
             <th>Кількість</th>
+            <th>Дії</th>
         </tr>
     </thead>
     <tbody>
         {% for coffee in coffees %}
             <tr>
-                <td><a class="coffee-link" href="{% url 'coffee_detail' coffee.pk %}">{{ coffee.name }}</a></td>
+                <td><a class="coffee-accent fw-semibold text-decoration-none" href="{% url 'coffee_detail' coffee.pk %}">{{ coffee.name }}</a></td>
                 <td>{{ coffee.country }}</td>
                 <td>{{ coffee.roast_level }}</td>
                 <td>{{ coffee.process_method }}</td>
-                <td>{{ coffee.quantity }}</td>
+                <td><span class="badge bg-dark fs-6">{{ coffee.quantity }}</span></td>
                 <td>
-                    <a href="{% url 'coffee_edit' coffee.pk %}" class="btn btn-sm coffee-btn">Редагувати</a>
-                    <a href="{% url 'coffee_delete' coffee.pk %}" class="btn btn-sm btn-danger">Видалити</a>
+                    <a href="{% url 'coffee_edit' coffee.pk %}" class="btn btn-sm btn-outline-dark rounded-pill px-3">Редагувати</a>
+                    <a href="{% url 'coffee_delete' coffee.pk %}" class="btn btn-sm btn-outline-danger rounded-pill px-3">Видалити</a>
                 </td>
             </tr>
         {% empty %}
-            <tr><td colspan="6">Немає записів — додай свою улюблену каву!</td></tr>
+            <tr>
+              <td colspan="6" class="text-center py-4">
+                <div class="alert alert-warning m-0">Немає записів — додай свою улюблену каву!</div>
+              </td>
+            </tr>
         {% endfor %}
     </tbody>
 </table>
+</div>
+
 {% if page_obj.has_other_pages %}
 <nav aria-label="Coffee pagination">
-  <ul class="pagination justify-content-center">
+  <ul class="pagination justify-content-center my-4">
     {% if page_obj.has_previous %}
       <li class="page-item">
-        <a class="page-link coffee-btn" href="?{% if request.GET.search %}search={{ request.GET.search }}&{% endif %}page={{ page_obj.previous_page_number }}">Назад</a>
+        <a class="page-link coffee-btn rounded-pill mx-1" href="?{% if request.GET.search %}search={{ request.GET.search }}&{% endif %}page={{ page_obj.previous_page_number }}">Назад</a>
       </li>
     {% else %}
-      <li class="page-item disabled"><span class="page-link">Назад</span></li>
+      <li class="page-item disabled"><span class="page-link rounded-pill mx-1">Назад</span></li>
     {% endif %}
     {% for num in page_obj.paginator.page_range %}
       {% if page_obj.number == num %}
-        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+        <li class="page-item active"><span class="page-link rounded-pill mx-1">{{ num }}</span></li>
       {% else %}
-        <li class="page-item"><a class="page-link coffee-btn" href="?{% if request.GET.search %}search={{ request.GET.search }}&{% endif %}page={{ num }}">{{ num }}</a></li>
+        <li class="page-item"><a class="page-link coffee-btn rounded-pill mx-1" href="?{% if request.GET.search %}search={{ request.GET.search }}&{% endif %}page={{ num }}">{{ num }}</a></li>
       {% endif %}
     {% endfor %}
     {% if page_obj.has_next %}
       <li class="page-item">
-        <a class="page-link coffee-btn" href="?{% if request.GET.search %}search={{ request.GET.search }}&{% endif %}page={{ page_obj.next_page_number }}">Вперед</a>
+        <a class="page-link coffee-btn rounded-pill mx-1" href="?{% if request.GET.search %}search={{ request.GET.search }}&{% endif %}page={{ page_obj.next_page_number }}">Вперед</a>
       </li>
     {% else %}
-      <li class="page-item disabled"><span class="page-link">Вперед</span></li>
+      <li class="page-item disabled"><span class="page-link rounded-pill mx-1">Вперед</span></li>
     {% endif %}
   </ul>
 </nav>

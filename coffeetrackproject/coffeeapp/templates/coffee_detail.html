@@ -1,61 +1,65 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="card coffee-detail-card p-4 mb-4">
-    <h2 class="coffee-heading">{{ object.name }}</h2>
+<div class="card perc-card coffee-detail-card mx-auto p-4 mb-4" style="max-width:680px;">
+    <h2 class="coffee-accent fw-bold mb-3" style="letter-spacing:2px;">{{ object.name }}</h2>
     {% if object.image %}
-    <img src="{{ object.image.url }}" class="img-fluid rounded mb-3" style="max-width: 400px;">
+      <img src="{{ object.image.url }}" class="img-fluid rounded mb-3" style="max-width:400px;">
     {% endif %}
 
-    <p><strong>Країна:</strong> {{ object.country }}</p>
-    <p><strong>Обсмажка:</strong> {{ object.roast_level }}</p>
-    <p><strong>Метод обробки:</strong> {{ object.process_method }}</p>
-    <p><strong>Кількість:</strong> {{ object.quantity }}</p>
-    <a href="{% url 'coffee_edit' object.pk %}" class="btn coffee-btn">Редагувати</a>
-    <a href="{% url 'coffee_delete' object.pk %}" class="btn btn-danger">Видалити</a>
-    <a href="{% url 'coffee_list' %}" class="btn coffee-btn mt-2">Назад</a>
-
+    <ul class="list-group list-group-flush mb-3">
+        <li class="list-group-item"><strong>Країна:</strong> {{ object.country }}</li>
+        <li class="list-group-item"><strong>Обсмажка:</strong> {{ object.roast_level }}</li>
+        <li class="list-group-item"><strong>Метод обробки:</strong> {{ object.process_method }}</li>
+        <li class="list-group-item"><strong>Кількість:</strong>
+            <span class="badge bg-dark">{{ object.quantity }}</span>
+        </li>
+    </ul>
+    <div class="d-flex gap-2 mb-3">
+        <a href="{% url 'coffee_edit' object.pk %}" class="btn btn-outline-dark rounded-pill px-4">Редагувати</a>
+        <a href="{% url 'coffee_delete' object.pk %}" class="btn btn-outline-danger rounded-pill px-4">Видалити</a>
+        <a href="{% url 'coffee_list' %}" class="btn btn-secondary rounded-pill px-4">Назад</a>
+    </div>
     <div class="mb-3">
         <strong>Опис:</strong>
 
-        <button type="button" id="gemini-descr-btn" class="btn btn-secondary btn-sm ms-2">
+        <span id="coffee-desc" class="ms-2">{{ object.description }}</span>
+
+        <button type="button" id="gemini-descr-btn" class="btn btn-outline-secondary btn-sm ms-2">
             Згенерувати опис через Gemini AI
         </button>
-
-        <span id="coffee-desc">{{ object.description }}</span>
-
     </div>
 </div>
-    <h3 class="mt-4 mb-2">Рецепти для цієї кави:</h3>
-<ul>
+
+<h3 class="mt-4 mb-2 coffee-accent">Рецепти для цієї кави:</h3>
+<ul class="list-group mb-4">
     {% for recipe in recipes %}
-        <li>
-            <a class="coffee-link" href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.title }}</a>
-            <span class="text-muted">({{ recipe.method }})</span>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a class="coffee-link fw-semibold" href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.title }}</a>
+            <span class="text-muted small">({{ recipe.method }})</span>
         </li>
     {% empty %}
-        <li>Немає збережених рецептів для цієї кави.</li>
+        <li class="list-group-item">Немає збережених рецептів для цієї кави.</li>
     {% endfor %}
 </ul>
 
 <script>
-    document.getElementById('gemini-descr-btn').onclick = function() {
-        fetch("{% url 'gemini_generate_description' %}", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                "X-CSRFToken": "{{ csrf_token }}"
-            },
-            body: "coffee_name=" + encodeURIComponent("{{ object.name }}")
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.description) {
-                document.getElementById('coffee-desc').innerText = data.description;
-            } else {
-                alert("Gemini не зміг згенерувати опис.");
-            }
-        })
-    }
+document.getElementById('gemini-descr-btn').onclick = function() {
+    fetch("{% url 'gemini_generate_description' %}", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            "X-CSRFToken": "{{ csrf_token }}"
+        },
+        body: "coffee_name=" + encodeURIComponent("{{ object.name }}")
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.description) {
+            document.getElementById('coffee-desc').innerText = data.description;
+        } else {
+            alert("Gemini не зміг згенерувати опис.");
+        }
+    })
+}
 </script>
-
 {% endblock %}

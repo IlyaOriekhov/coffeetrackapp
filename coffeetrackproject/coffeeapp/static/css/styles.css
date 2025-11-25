@@ -1,75 +1,123 @@
 body.coffee-bg {
-    background: #3e2512;
-    min-height: 100vh;
+  background: #faf6f1;
+  font-family: 'Roboto', sans-serif;
 }
 
-.coffee-navbar, .coffee-footer {
-    background: #5c3822;
-    color: #ffe3b3;
+.coffee-navbar {
+  background: #fff7f0;
+  border-bottom: 2px solid #f0e6da;
+}
+
+.navbar-brand, .coffee-accent {
+  color: #ff6800;
+  letter-spacing: 2px;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+}
+
+.nav-link, .coffee-link {
+  color: #6d4d2c;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 1px;
+  transition: color 0.15s;
+}
+
+.nav-link:hover, .coffee-link:hover {
+  color: #ff6800;
 }
 
 .coffee-container {
-    background: #ffe3b3;
-    border: 1px solid #deb887;
+  background: #fff;
+  box-shadow: 0 8px 36px rgba(113, 65, 7, 0.07), 0 2px 4px rgba(0,0,0,.03);
+  border-radius: 18px;
 }
 
-.coffee-heading {
-    color: #5c3822;
-    font-family: 'Merriweather', serif;
+.perc-card {
+  border-radius: 20px;
+  box-shadow: 0 6px 32px rgba(0,0,0,.08);
+  border: none;
 }
 
-.coffee-link, .coffee-link:visited {
-    color: #835c3b;
-    text-decoration: underline;
+.coffee-footer {
+  background: transparent;
+  color: #9e8972;
+  letter-spacing: 1px;
+  font-family: 'Roboto', sans-serif;
+  border-top: 1px solid #f1e8df;
 }
 
-.coffee-link:hover {
-    color: #9c7248;
-    text-decoration: none;
+.alert-warning {
+    background: #ffe8c6;
+    color: #56411b;
+    border-color: #ffd08a;
 }
 
-.coffee-btn, .btn.coffee-btn {
-    background: #7a4f2b !important;
-    color: #ffe3b3 !important;
+.btn-dark {
+  background: #312720;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+  transition: box-shadow 0.18s;
+}
+
+.btn-dark:hover,.btn-outline-dark:hover {
+    background: #ff6800;
+    color: #fff;
     border: none;
+    box-shadow: 0 2px 12px #ff680080;
 }
 
-.coffee-btn:hover {
-    background: #a98457 !important;
-    color: #fff !important;
+.rounded-pill {
+  border-radius: 28px;
+}
+
+.coffee-accent {
+  color: #ff6800;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+}
+
+.coffee-btn {
+  color: #6d4d2c;
+  background: #ffeed9 ;
+  border: 1px solid #ff6800 ;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.page-item.active .page-link {
+  background-color: #ff6800;
+  border-color: #ff6800;
+  color: #fff;
 }
 
 .coffee-table {
-    background: #fff9f3;
-    border-color: #deb887;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-.coffee-detail-card {
-    background: #fff6e6;
-    border: 2px solid #deb887;
-    color: #5c3822;
+.coffee-search-form input,
+.coffee-search-form select {
+  border-radius: 8px;
+  border: 1px solid #ffe4b7;
 }
 
-.coffee-form, .coffee-login-form, .coffee-register-form, .coffee-confirm-delete {
-    background: #fff9f3;
-    border: 2px solid #deb887;
+.coffee-search-input:focus {
+  box-shadow: 0 1px 8px #ff680050;
+  border-color: #ff6800;
 }
 
-footer.coffee-footer {
-    color: #ffe3b3;
-    background: #3e2512;
+.active>.page-link {
+    background-color: #212529;
 }
 
-.bg-coffee {
-    background: #b7986a;
-    color: #fff9e3;
+.recipe-table {
+  border-radius: 12px;
+  overflow: hidden;
 }
-.coffee-link { color: #835c3b; text-decoration: none; font-weight: bold; }
-.coffee-link:hover { text-decoration: underline; color: #784220; }
-
-.coffee-quote {
-    color: #784220;
-    font-style: italic;
-    border-left: 4px solid #deb887;
-    padding-left: 12px;
+.recipe-search-input:focus {
+  box-shadow: 0 1px 8px #ff680050;
+  border-color: #ff6800;
 }

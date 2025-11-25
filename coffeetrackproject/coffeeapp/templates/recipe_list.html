@@ -1,34 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
-<h1 class="coffee-heading">Рецепти кави</h1>
-<a href="{% url 'recipe_add' %}" class="btn coffee-btn mb-3">Додати рецепт</a>
 
-<form method="get" class="row gy-2 align-items-center mb-4 coffee-search-form">
-    <div class="col-sm-6 mb-2">
-        <input type="text" name="search"
-               class="form-control coffee-search-input"
-               placeholder="Пошук за назвою рецепта..."
-               value="{{ request.GET.search }}">
+<h1 class="mb-4 coffee-accent fw-bold" style="letter-spacing:2px;">Мої рецепти</h1>
+<a href="{% url 'recipe_add' %}" class="btn btn-dark rounded-pill mb-3 px-4">Додати рецепт</a>
+
+<form method="get" class="row gy-2 gx-2 align-items-center mb-4 rounded coffee-search-form p-3 shadow-sm" style="background:#fff7f0;">
+    <div class="col-sm-3 mb-2">
+        <input type="text" name="search" class="form-control recipe-search-input"
+               placeholder="Пошук рецепта..." value="{{ request.GET.search }}">
     </div>
-    <div class="col-sm-4 mb-2">
-        <select name="method" class="form-select coffee-search-input">
-            <option value="">Будь-який метод</option>
+    <div class="col-sm-2 mb-2">
+        <select name="method" class="form-select recipe-search-input">
+            <option value="">Всі методи</option>
             {% for m in methods %}
                 <option value="{{ m }}" {% if request.GET.method == m %}selected{% endif %}>{{ m }}</option>
             {% endfor %}
         </select>
     </div>
     <div class="col-auto mb-2">
-        <button type="submit" class="btn coffee-btn">
-            Фільтрувати
-        </button>
+        <button type="submit" class="btn btn-outline-dark rounded-pill px-4 coffee-btn">Фільтрувати</button>
     </div>
 </form>
 
-<table class="table table-striped coffee-table">
-    <thead>
+<div class="table-responsive rounded shadow-sm">
+<table class="table table-hover table-bordered bg-white recipe-table align-middle">
+    <thead class="table-light">
         <tr>
-            <th>Назва рецепта</th>
+            <th>Назва</th>
             <th>Метод</th>
             <th>Опис</th>
             <th>Кава</th>
@@ -38,18 +36,62 @@
     <tbody>
         {% for recipe in recipes %}
             <tr>
-                <td><a class="coffee-link" href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.title }}</a></td>
-                <td>{{ recipe.method }}</td>
-                <td>{{ recipe.description|truncatechars:50 }}</td>
-                <td>{{ recipe.coffee.name }}</td>
                 <td>
-                    <a href="{% url 'recipe_edit' recipe.pk %}" class="btn btn-sm coffee-btn">Редагувати</a>
-                    <a href="{% url 'recipe_delete' recipe.pk %}" class="btn btn-sm btn-danger">Видалити</a>
+                  <a class="coffee-accent fw-semibold text-decoration-none" href="{% url 'recipe_detail' recipe.pk %}">
+                      {{ recipe.title }}
+                  </a>
+                </td>
+                <td><span class="badge bg-dark">{{ recipe.method }}</span></td>
+                <td>{{ recipe.description|truncatechars:60 }}</td>
+                <td>
+                  {% if recipe.coffee %}
+                    <a class="coffee-link text-decoration-none" href="{% url 'coffee_detail' recipe.coffee.pk %}">{{ recipe.coffee.name }}</a>
+                  {% else %}
+                    <span class="text-muted">—</span>
+                  {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'recipe_edit' recipe.pk %}" class="btn btn-sm btn-outline-dark rounded-pill px-3">Редагувати</a>
+                    <a href="{% url 'recipe_delete' recipe.pk %}" class="btn btn-sm btn-outline-danger rounded-pill px-3">Видалити</a>
                 </td>
             </tr>
         {% empty %}
-            <tr><td colspan="5">Немає рецептів — додай перший!</td></tr>
+            <tr>
+              <td colspan="5" class="text-center py-4">
+                <div class="alert alert-warning m-0">Рецептів поки немає — створіть улюблений!</div>
+              </td>
+            </tr>
         {% endfor %}
     </tbody>
 </table>
+</div>
+
+{% if page_obj.has_other_pages %}
+<nav aria-label="Recipe pagination">
+  <ul class="pagination justify-content-center my-4">
+    {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link coffee-btn rounded-pill mx-1" href="?{% if request.GET.search %}search={{ request.GET.search }}&{% endif %}page={{ page_obj.previous_page_number }}">Назад</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled"><span class="page-link rounded-pill mx-1">Назад</span></li>
+    {% endif %}
+    {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+        <li class="page-item active"><span class="page-link rounded-pill mx-1">{{ num }}</span></li>
+      {% else %}
+        <li class="page-item"><a class="page-link coffee-btn rounded-pill mx-1" href="?{% if request.GET.search %}search={{ request.GET.search }}&{% endif %}page={{ num }}">{{ num }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link coffee-btn rounded-pill mx-1" href="?{% if request.GET.search %}search={{ request.GET.search }}&{% endif %}page={{ page_obj.next_page_number }}">Вперед</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled"><span class="page-link rounded-pill mx-1">Вперед</span></li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
+
 {% endblock %}
