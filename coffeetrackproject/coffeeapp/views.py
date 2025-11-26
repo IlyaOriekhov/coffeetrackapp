@@ -25,8 +25,6 @@ class CoffeeListView(ListView):
 
     def get_queryset(self):
         queryset = Coffee.objects.all()
-        if self.request.user.is_authenticated:
-            queryset = queryset.filter(owner=self.request.user)
         search_query = self.request.GET.get("search", "")
         country = self.request.GET.get("country", "")
         roast = self.request.GET.get("roast", "")
@@ -101,8 +99,6 @@ class RecipeListView(ListView):
 
     def get_queryset(self):
         queryset = Recipe.objects.all()
-        if self.request.user.is_authenticated:
-            queryset = queryset.filter(owner=self.request.user)
         search_query = self.request.GET.get("search", "")
         method = self.request.GET.get("method", "")
         if search_query:
