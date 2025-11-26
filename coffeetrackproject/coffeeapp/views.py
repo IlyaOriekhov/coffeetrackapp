@@ -236,4 +236,3 @@ def gemini_generate_description(request):
             return JsonResponse({"error": str(e)}, status=500)
 
     return JsonResponse({"error": "Invalid request."}, status=400)
-

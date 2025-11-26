@@ -1,6 +1,8 @@
 body.coffee-bg {
-  background: #faf6f1;
-  font-family: 'Roboto', sans-serif;
+    background: url('/static/img/beans.jpg') center center no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 100vh;
 }
 
 .coffee-navbar {
@@ -27,7 +29,7 @@ body.coffee-bg {
 }
 
 .coffee-container {
-  background: #fff;
+  background: #f0e6da;
   box-shadow: 0 8px 36px rgba(113, 65, 7, 0.07), 0 2px 4px rgba(0,0,0,.03);
   border-radius: 18px;
 }
@@ -40,10 +42,9 @@ body.coffee-bg {
 
 .coffee-footer {
   background: transparent;
-  color: #9e8972;
+  color: #f0e6da;
   letter-spacing: 1px;
   font-family: 'Roboto', sans-serif;
-  border-top: 1px solid #f1e8df;
 }
 
 .alert-warning {
@@ -120,4 +121,8 @@ body.coffee-bg {
 .recipe-search-input:focus {
   box-shadow: 0 1px 8px #ff680050;
   border-color: #ff6800;
+}
+.small {
+    color: #f0e6da;
+    font-family:  "Open Sans", sans-serif;
 }

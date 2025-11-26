@@ -36,7 +36,7 @@
                 <div class="mb-1"><span class="badge bg-dark">{{ recipe.method }}</span></div>
                 <p class="card-text mb-2 small">{{ recipe.description|truncatechars:80 }}</p>
                 {% if recipe.coffee %}
-                    <small class="text-muted">Кава: <a class="coffee-link" href="{% url 'coffee_detail' recipe.coffee.pk %}">{{ recipe.coffee.name }}</a></small>
+                    <p class="text-muted">Кава: <a class="coffee-link" href="{% url 'coffee_detail' recipe.coffee.pk %}">{{ recipe.coffee.name }}</a></p>
                 {% endif %}
                 <div class="mt-auto d-flex gap-2">
                         <a href="{% url 'recipe_detail' recipe.pk %}" class="btn btn-outline-dark btn-sm rounded-pill">Деталі</a>

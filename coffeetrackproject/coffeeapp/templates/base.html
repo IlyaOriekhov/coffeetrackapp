@@ -8,7 +8,11 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="icon" type="image/svg+xml" href="{% static 'img/coffee.svg' %}">
 
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+     <link rel="preconnect" href="https://fonts.googleapis.com" />
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:ital,wght@0,400;1,400&family=Source+Sans+Pro:wght@400&display=swap"
+          rel="stylesheet"
+        />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
@@ -61,7 +65,7 @@
     </nav>
 
     <main class="flex-grow-1">
-        <div class="container mt-4 coffee-container rounded shadow-sm p-4 mb-5" style="background:#fff">
+        <div class="container mt-4 coffee-container rounded shadow-sm p-4 mb-5" >
             {% if messages %}
                 {% for message in messages %}
                     <div class="alert alert-warning">{{ message }}</div>
@@ -72,7 +76,7 @@
     </main>
 
     <footer class="text-center py-3 coffee-footer mt-5 text-muted">
-        <small>CoffeeTrack — для справжніх кавоманів!</small>
+        <p class="small">CoffeeTrack — для справжніх кавоманів!</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
