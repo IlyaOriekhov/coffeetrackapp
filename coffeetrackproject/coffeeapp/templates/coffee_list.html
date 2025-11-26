@@ -30,41 +30,33 @@
     </div>
 </form>
 
-<div class="table-responsive rounded shadow-sm">
-<table class="table table-hover table-bordered bg-white coffee-table align-middle">
-    <thead class="table-light">
-        <tr>
-            <th>Назва</th>
-            <th>Країна</th>
-            <th>Обсмажка</th>
-            <th>Метод обробки</th>
-            <th>Кількість</th>
-            <th>Дії</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for coffee in coffees %}
-            <tr>
-                <td><a class="coffee-accent fw-semibold text-decoration-none" href="{% url 'coffee_detail' coffee.pk %}">{{ coffee.name }}</a></td>
-                <td>{{ coffee.country }}</td>
-                <td>{{ coffee.roast_level }}</td>
-                <td>{{ coffee.process_method }}</td>
-                <td><span class="badge bg-dark fs-6">{{ coffee.quantity }}</span></td>
-                <td>
-                    <a href="{% url 'coffee_edit' coffee.pk %}" class="btn btn-sm btn-outline-dark rounded-pill px-3">Редагувати</a>
-                    <a href="{% url 'coffee_delete' coffee.pk %}" class="btn btn-sm btn-outline-danger rounded-pill px-3">Видалити</a>
-                </td>
-            </tr>
-        {% empty %}
-            <tr>
-              <td colspan="6" class="text-center py-4">
-                <div class="alert alert-warning m-0">Немає записів — додай свою улюблену каву!</div>
-              </td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for coffee in coffees %}
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            {% if coffee.image %}
+              <img src="{{ coffee.image.url }}" class="card-img-top" style="object-fit:cover;max-height:140px;">
+            {% endif %}
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title coffee-accent mb-2">{{ coffee.name }}</h5>
+                <p class="mb-1"><b>Країна:</b> {{ coffee.country }}</p>
+                <p class="mb-1"><b>Обсмажка:</b> {{ coffee.roast_level }}</p>
+                <p class="mb-1"><b>Метод:</b> {{ coffee.process_method }}</p>
+                <p class="mb-3"><b>Кількість:</b> <span class="badge bg-dark">{{ coffee.quantity }} г</span></p>
+                <div class="mt-auto d-flex gap-2">
+                    <a href="{% url 'coffee_detail' coffee.pk %}" class="btn btn-outline-dark btn-sm rounded-pill">Деталі</a>
+                    {% if user.is_authenticated and coffee.owner == user %}
+                        <a href="{% url 'coffee_edit' coffee.pk %}" class="btn btn-secondary btn-sm rounded-pill">Редагувати</a>
+                        <a href="{% url 'coffee_delete' coffee.pk %}" class="btn btn-danger btn-sm rounded-pill">Видалити</a>
+                    {% endif %}
+                </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12"><div class="alert alert-warning">Поки немає жодної кави.</div></div>
+    {% endfor %}
 </div>
+
 
 {% if page_obj.has_other_pages %}
 <nav aria-label="Coffee pagination">

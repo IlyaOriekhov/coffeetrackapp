@@ -128,7 +128,7 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
         form.instance.owner = self.request.user
         return super().form_valid(form)
 
-class RecipeDetailView(LoginRequiredMixin, DetailView):
+class RecipeDetailView(DetailView):
     model = Recipe
     template_name = "recipe_detail.html"
 
@@ -197,7 +197,7 @@ def home_view(request):
 def news_view(request):
     feed_url = "https://sprudge.com/feed"
     feed = feedparser.parse(feed_url)
-    items = feed.entries[:8]
+    items = feed.entries[:9]
     return render(request, "news.html", {"news_items": items})
 
 genai.configure(api_key=settings.GEMINI_API_KEY)
