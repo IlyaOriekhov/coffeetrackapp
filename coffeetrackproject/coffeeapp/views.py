@@ -223,7 +223,7 @@ def gemini_generate_description(request):
             coffee_name = request.POST.get("coffee_name", "")
         if not coffee_name:
             return JsonResponse({"error": "coffee_name is required"}, status=400)
-        prompt = f"Напиши короткий, приємний опис кави під назвою '{coffee_name}' для кавоманів."
+        prompt = f"Напиши найкращий рецепт для '{coffee_name}'. Мова відповіді - українська."
         try:
             model = genai.GenerativeModel(
                 model_name="gemini-2.5-flash",

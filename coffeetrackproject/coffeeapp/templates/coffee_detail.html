@@ -11,15 +11,15 @@
         <li class="list-group-item"><strong>Обсмажка:</strong> {{ object.roast_level }}</li>
         <li class="list-group-item"><strong>Метод обробки:</strong> {{ object.process_method }}</li>
         <li class="list-group-item"><strong>Кількість:</strong>
-            <span class="badge bg-dark">{{ object.quantity }}</span>
+            <span class="badge bg-dark">{{ object.quantity }} г</span>
         </li>
     </ul>
     <div class="d-flex gap-2 mb-3">
         {% if user.is_authenticated and object.owner == user %}
-            <a href="{% url 'coffee_edit' object.pk %}" class="btn coffee-btn">Редагувати</a>
-            <a href="{% url 'coffee_delete' object.pk %}" class="btn btn-danger">Видалити</a>
+            <a href="{% url 'coffee_edit' object.pk %}" class="btn btn-secondary btn-sm rounded-pill">Редагувати</a>
+            <a href="{% url 'coffee_delete' object.pk %}" class="btn btn-danger btn-sm rounded-pill">Видалити</a>
         {% endif %}
-            <a href="{% url 'coffee_list' %}" class="btn coffee-btn mt-2">Назад</a>
+            <a href="{% url 'coffee_list' %}" class="btn btn-outline-dark btn-sm rounded-pill">Назад</a>
     </div>
     <div class="mb-3">
         <strong>Опис:</strong>
