@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.shortcuts import render, redirect
 
+import re
 import feedparser
 
 import json
@@ -21,7 +22,7 @@ class CoffeeListView(ListView):
     model = Coffee
     template_name = "coffee_list.html"
     context_object_name = "coffees"
-    paginate_by = 1
+    paginate_by = 9
 
     def get_queryset(self):
         queryset = Coffee.objects.all()
@@ -95,7 +96,7 @@ class RecipeListView(ListView):
     model = Recipe
     template_name = "recipe_list.html"
     context_object_name = "recipes"
-    paginate_by = 1
+    paginate_by = 9
 
     def get_queryset(self):
         queryset = Recipe.objects.all()
@@ -189,11 +190,25 @@ def logout_view(request):
 def home_view(request):
     return render(request, "home.html")
 
-#ОТУТ ТРЕБ ПОКОПАТИСЬ ПО ЯКІСЬ ДИВНІ АРТИКЛІ ВИДАЄ В НОВИНАХ НЕ РОЗУМІЮ
+
 def news_view(request):
-    feed_url = "https://sprudge.com/feed"
+    feed_url = "https://dailycoffeenews.com/feed"
     feed = feedparser.parse(feed_url)
-    items = feed.entries[:9]
+    items = []
+    for entry in feed.entries[:9]:
+        summary = entry.summary
+
+        img_url = ""
+        m = re.search(r'<img[^>]+src="([^"]+)"', summary)
+        if m:
+            img_url = m.group(1)
+
+        items.append({
+            "title": entry.title,
+            "link": entry.link,
+            "published": getattr(entry, "published", ""),
+            "img_url": img_url
+        })
     return render(request, "news.html", {"news_items": items})
 
 genai.configure(api_key=settings.GEMINI_API_KEY)
