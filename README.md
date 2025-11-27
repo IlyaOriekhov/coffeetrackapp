@@ -108,12 +108,13 @@ CoffeeTrack допомагає баристам та любителям кави
 ## TODO (можливі покращення)
 
 - [ ] Додати тести (pytest + factory-boy)
-- [ ] Додати API (Django REST Framework)
+- [ ] Додати API (Django REST Framework) а також оновити сайт з Django Tailwind + Flowbite/daisyUI
 - [ ] Телеграм-бот для швидкого додавання кави
 - [ ] Експорт рецептів у PDF
 - [ ] Рейтинги та коментарі до рецептів
 - [ ] Deployment на Railway або PythonAnywhere
 - [ ] Зробити адаптив
+- [ ] зробити профіль користувача
 
 ---
 
